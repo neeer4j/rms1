@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="success-section">
+    <h2>Registration Successful</h2>
+    <p>Your Member ID is: {{ member_id }}</p>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</section>
+{% endblock %}

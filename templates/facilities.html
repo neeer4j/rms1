@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body class="facilities-page">
+<section class="form-section">
+    <h2>Book a Facility</h2>
+    <form action="{{ url_for('facilities') }}" method="post">
+        <label for="facility_id">Facility:</label>
+        <select id="facility_id" name="facility_id" required>
+            {% for facility in facilities %}
+                <option value="{{ facility[0] }}">{{ facility[1] }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+        <input type="submit" value="Book">
+    </form>
+</section>
+{% if success %}
+    <div class="success-message">
+        <p>Facility booked successfully!</p>
+        <a href="{{ url_for('dashboard') }}">Go to Dashboard</a>
+    </div>
+{% endif %}
+</body>
+{% endblock %}

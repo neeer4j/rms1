@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="{{ theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residential Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+</head>
+<body class="{{ theme }}">
+    <header>
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="{{ url_for('home') }}">Residential Management System</a>
+            </div>
+            <nav>
+                <ul class="navbar-nav">
+                    <li><a href="{{ url_for('home') }}"><i class="fa fa-home"></i> &nbspHome</a></li>
+                    {% if session.user_id %}
+                        <li><a href="{{ url_for('dashboard') }}"><i class="fa fa-tachometer-alt"></i>&nbsp Dashboard</a></li>
+                        <li><a href="{{ url_for('complaints') }}"><i class="fa fa-exclamation-circle"></i> &nbspComplaints</a></li>
+                        <li><a href="{{ url_for('facilities') }}"><i class="fa fa-building"></i> &nbspFacilities</a></li>
+                        <li><a href="{{ url_for('profile') }}"><i class="fa fa-user"></i> &nbspProfile</a></li>
+                    {% elif session.admin_id %}
+                        <li><a href="{{ url_for('admin_dashboard') }}"><i class="fa fa-tachometer-alt"></i>&nbsp Admin Dashboard</a></li>
+                        <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out-alt"></i> &nbspLogout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('signup') }}"><i class="fa fa-user-plus"></i> &nbspSignup</a></li>
+                        <li><a href="{{ url_for('login') }}"><i class="fa fa-sign-in-alt"></i> &nbspLogin</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="navbar-right">
+                <div class="navbar-welcome">
+                    {% if session.user_id %}
+                        <div>Welcome, {{ session.user_name }}</div>
+                        <div class="member-id">Member ID: {{ session.member_id }}</div>
+                    {% elif session.admin_id %}
+                        <div>Welcome, {{ session.admin_name }}</div>
+                    {% endif %}
+                </div>
+                {% if session.user_id or session.admin_id %}
+                    <a href="{{ url_for('logout') }}" class="logout-button"><i class="fa fa-sign-out-alt"></i>Logout</a>
+                {% endif %}
+                <div class="theme-toggle-dropdown">
+                    <select id="theme-toggle" class="btn-primary">
+                        <option value="default">Default</option>
+                        <option value="cool-blue">Cool Blue</option>
+                        <option value="nature-green">Nature Green</option>
+                        <option value="forest">Forest</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Residential Management System. All rights reserved.</p>
+    </footer>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+            <div class="loader"></div>
+            <div class="bar-loader"></div>
+        </div>
+        
+    </div>
+
+    <!-- Include JavaScript files -->
+    <script src="{{ url_for('static', filename='js/theme-toggle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loadingScreen.js') }}"></script>
+</body>
+</html>

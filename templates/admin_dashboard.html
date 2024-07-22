@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="dashboard-section">
+    <h2>Admin Dashboard</h2>
+    
+    <div class="data-section">
+        <h3>All Complaints</h3>
+        {% if complaints %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Member ID</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complaint in complaints %}
+                        <tr>
+                            <td>{{ complaint[0] }}</td>
+                            <td>{{ complaint[1] }}</td>
+                            <td>{{ complaint[2] }}</td>
+                            <td class="{% if complaint[3] == 'Accepted' %}status-accepted{% elif complaint[3] == 'Rejected' %}status-rejected{% endif %}">
+                                {{ complaint[3] }}
+                            </td>
+                            <td>
+                                <div class="action-container">
+                                    <form action="{{ url_for('update_complaint_status', complaint_id=complaint[0]) }}" method="post" class="action-form">
+                                        <input type="hidden" name="status" value="Accepted">
+                                        <input type="text" name="reason" placeholder="Reason (optional)">
+                                        <input type="submit" value="Accept" class="accept-button">
+                                    </form>
+                                    <form action="{{ url_for('update_complaint_status', complaint_id=complaint[0]) }}" method="post" class="action-form">
+                                        <input type="hidden" name="status" value="Rejected">
+                                        <input type="text" name="reason" placeholder="Reason (optional)">
+                                        <input type="submit" value="Reject" class="reject-button">
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No complaints found.</p>
+        {% endif %}
+    </div>
+    
+    <div class="data-section">
+        <h3>All Bookings</h3>
+        {% if bookings %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Member ID</th>
+                        <th>Facility</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking[0] }}</td>
+                            <td>{{ booking[1] }}</td>
+                            <td>{{ booking[2] }}</td>
+                            <td>{{ booking[3] }}</td>
+                            <td>{{ booking[4] }}</td>
+                            <td>
+                                <div class="action-container">
+                                    <form action="{{ url_for('update_booking_status', booking_id=booking[0]) }}" method="post" class="action-form">
+                                        <input type="hidden" name="status" value="Accepted">
+                                        <input type="text" name="reason" placeholder="Reason (optional)">
+                                        <input type="submit" value="Accept" class="accept-button">
+                                    </form>
+                                    <form action="{{ url_for('update_booking_status', booking_id=booking[0]) }}" method="post" class="action-form">
+                                        <input type="hidden" name="status" value="Rejected">
+                                        <input type="text" name="reason" placeholder="Reason (optional)">
+                                        <input type="submit" value="Reject" class="reject-button">
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No bookings found.</p>
+        {% endif %}
+    </div>
+
+    <div class="clear-data-section">
+        <h3>Clear Data</h3>
+        <div class="clear-buttons">
+            <form action="{{ url_for('clear_users') }}" method="POST" class="clear-form">
+                <input type="submit" value="Clear All Users">
+            </form>
+            <form action="{{ url_for('clear_complaints') }}" method="POST" class="clear-form">
+                <input type="submit" value="Clear All Complaints">
+            </form>
+        </div>
+        <div class="clear-buttons">
+            <form action="{{ url_for('clear_bookings') }}" method="POST" class="clear-form">
+                <input type="submit" value="Clear All Bookings">
+            </form>
+            <form action="{{ url_for('clear_all_data') }}" method="POST" class="clear-form">
+                <input type="submit" value="Clear All Data">
+            </form>
+        </div>
+    </div>
+
+    <div class="data-section">
+        <h3>User Details</h3>
+        <a href="{{ url_for('user_details') }}">View User Details</a>
+    </div>
+</section>
+{% endblock %}

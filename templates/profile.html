@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="vh-100" style="background-color: #f4f5f7;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <img id="avatar" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile.png"
+                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+              <h5>{{ user[0] }}</h5>
+              <p>Resident</p>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>Information</h6>
+                <hr class="mt-0 mb-4">
+                <form method="post" action="{{ url_for('profile') }}">
+                  <div class="row pt-1">
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="name">Name:</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="name" name="name" value="{{ user[0] }}" readonly required>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary" onclick="toggleEdit('name')">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="email">Email:</label>
+                        <div class="input-group">
+                          <input type="email" class="form-control" id="email" name="email" value="{{ user[1] }}" readonly required>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary" onclick="toggleEdit('email')">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="phone" name="phone" value="{{ user[2] }}" readonly required>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary" onclick="toggleEdit('phone')">
+                              <i class="fa fa-pencil"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="password">New Password:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                        <small class="form-text text-muted">Leave blank if you don't want to change the password.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleEdit(fieldId) {
+  var field = document.getElementById(fieldId);
+  if (field.hasAttribute('readonly')) {
+    field.removeAttribute('readonly');
+  } else {
+    field.setAttribute('readonly', 'readonly');
+  }
+}
+</script>
+<script src="{{ url_for('static', filename='js/theme-toggle.js') }}"></script>
+
+{% endblock %}

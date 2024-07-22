@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body class="dashboard-page">
+<section class="dashboard-section">
+    <h2>Dashboard</h2>
+    <h3>Your Complaints</h3>
+    {% if complaints %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complaint in complaints %}
+                    <tr>
+                        <td>{{ complaint[0] }}</td>
+                        <td>{{ complaint[1] }}</td>
+                        <td class="{% if complaint[2] == 'Accepted' %}status-accepted{% elif complaint[2] == 'Rejected' %}status-rejected{% endif %}">
+                            {{ complaint[2] }}
+                        </td>
+                        <td>{{ complaint[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No complaints found.</p>
+    {% endif %}
+    <h3>Your Booked Facilities</h3>
+    {% if bookings %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Facility</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking[0] }}</td>
+                        <td>{{ booking[1] }}</td>
+                        <td>{{ booking[2] }}</td>
+                        <td>{{ booking[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No booked facilities found.</p>
+    {% endif %}
+</section>
+</body>
+{% endblock %}

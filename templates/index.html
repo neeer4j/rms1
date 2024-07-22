@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="welcome-section">
+    <h2>Welcome to the Residential Management System</h2>
+    <p>Manage your Residency efficiently with our web-based platform.</p>
+    {% if session.user_id %}
+        <a class="btn-primary" href="{{ url_for('dashboard') }}">Go to Dashboard</a>
+        <a class="btn-primary" href="{{ url_for('facilities') }}">Book a Facility</a>
+        <a class="btn-primary" href="{{ url_for('complaints') }}">Raise a Complaint</a>
+    {% elif session.admin_id %}
+        <a class="btn-primary" href="{{ url_for('admin_dashboard') }}">Go to Dashboard</a>
+    {% else %}
+        <a class="btn-primary" href="{{ url_for('signup') }}">Register Now</a>
+        <a class="btn-primary" href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+</section>
+{% endblock %}
