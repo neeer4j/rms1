@@ -34,10 +34,10 @@ def update_github_project():
 
     # Pull the latest changes from the remote repository
     branch_name = "main"  # Change this if you are using a different branch
-    run_command(f"git pull origin master")
+    run_command(f"git pull origin main")
 
     # Push changes to GitHub
-    run_command(f"git push origin master")
+    run_command(f"git push origin main")
 
 if __name__ == "__main__":
     update_github_project()
